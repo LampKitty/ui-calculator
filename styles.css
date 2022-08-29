@@ -25,6 +25,7 @@ html,body {
     border-radius: 5px;
     /* flex */
     flex: 2;
+    max-height: 121px;
 }
 
 #numberpad {

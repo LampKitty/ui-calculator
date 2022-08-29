@@ -29,3 +29,18 @@ function operate(operator, a, b) {
     }
 }
 
+// DOM elements
+const clear = document.querySelector('#clear');
+const buttonList = document.querySelectorAll('#numberpad>div>button');
+let display = document.querySelector('#display');
+console.log(clear.textContent);
+let displayText = display.textContent;
+
+
+buttonList.forEach(function(element) {
+        element.addEventListener('click',function() {
+            display.textContent += element.textContent;
+            displayText += element.textContent;
+            console.log(displayText);
+        })
+    });

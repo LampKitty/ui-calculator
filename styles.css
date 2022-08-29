@@ -23,6 +23,7 @@ html,body {
 #display {
     background-color: #b1f0ec;
     border-radius: 5px;
+    font-size: 22px;
     /* flex */
     flex: 2;
     max-height: 121px;

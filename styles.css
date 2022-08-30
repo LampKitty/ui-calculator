@@ -22,10 +22,15 @@ html,body {
 
 #display {
     background-color: #b1f0ec;
+    box-sizing: border-box;
+    padding: 10px;
     border-radius: 5px;
-    font-size: 22px;
+    font-size: 40px;
     /* flex */
     flex: 2;
+    display: flex;
+    flex-flow: column-reverse;
+    text-align: right;
     max-height: 121px;
 }
 

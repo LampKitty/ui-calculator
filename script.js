@@ -15,7 +15,7 @@ function divide(a, b) {
 }
 
 function operate(operator, a, b) {
-    switch(operator) {
+    switch (operator) {
         case '+':
             return add(a, b);
         case '-':
@@ -33,14 +33,74 @@ function operate(operator, a, b) {
 const clear = document.querySelector('#clear');
 const buttonList = document.querySelectorAll('#numberpad>div>button');
 let display = document.querySelector('#display');
-console.log(clear.textContent);
-let displayText = display.textContent;
 
+// function vars
+usrInput = '';
+let num1 = 0;
+let op = '';
 
-buttonList.forEach(function(element) {
-        element.addEventListener('click',function() {
+// Buttons
+buttonList.forEach(function (element) {
+
+    element.addEventListener('click', function () {
+        if (isOperator(element.textContent)) {
+            if(isEqualSign(element.textContent)) {
+                num1 = operate(op, +num1, +usrInput);
+                usrInput = '';
+                op = ''
+                display.textContent = num1;
+            } else if(isNegativeNum(element.textContent, usrInput)) {
+                usrInput += element.textContent;
+                display.textContent += element.textContent;
+            } else {
+                num1 = usrInput;
+                usrInput = '';
+                op = whichOperation(element.textContent);
+                display.textContent += op;
+            }
+            
+            
+        } else {
             display.textContent += element.textContent;
-            displayText += element.textContent;
-            console.log(displayText);
-        })
-    });
+            usrInput += element.textContent;
+        }
+    })
+})
+
+
+function whichOperation(op) {
+        switch (op) {
+            case '÷':
+                return op = '/';
+                break;
+            case 'x':
+                return op = '*';
+                break;
+            default:
+                return op;
+        }
+
+}
+function isNegativeNum(element, input) {
+    return element === '-' && input === ''? true : false;
+}
+
+
+function isEqualSign(element) {
+    return element === "=" ? true : false;
+}
+
+function isOperator(element) {
+    if (element === 'x' ||
+        element === '-' ||
+        element === '+' ||
+        element === '=' ||
+        element === '÷' ||
+        element === clear.textContent) {
+
+        return true;
+    } else {
+        return false;
+    }
+}
+

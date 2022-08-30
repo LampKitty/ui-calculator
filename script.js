@@ -11,7 +11,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    return a / b;
+    return (a/b).toFixed(2);
 }
 
 function operate(operator, a, b) {
@@ -44,22 +44,14 @@ buttonList.forEach(function (element) {
 
     element.addEventListener('click', function () {
         if (isOperator(element.textContent)) {
-            if(isEqualSign(element.textContent)) {
-                num1 = operate(op, +num1, +usrInput);
-                usrInput = '';
-                op = ''
-                display.textContent = num1;
-            } else if(isNegativeNum(element.textContent, usrInput)) {
-                usrInput += element.textContent;
-                display.textContent += element.textContent;
+            if(operatorCheck(element)) {
+
             } else {
                 num1 = usrInput;
                 usrInput = '';
                 op = whichOperation(element.textContent);
                 display.textContent += op;
             }
-            
-            
         } else {
             display.textContent += element.textContent;
             usrInput += element.textContent;
@@ -67,24 +59,39 @@ buttonList.forEach(function (element) {
     })
 })
 
+function operatorCheck(element) {
+    if(isEqualSign(element.textContent)) {
+        num1 = operate(op, +num1, +usrInput);
+        usrInput = '';
+        op = ''
+        display.textContent = num1;
+        return true;
+    } else if(isNegativeNum(element.textContent, usrInput)) {
+        usrInput += element.textContent;
+        display.textContent += element.textContent;
+        return true;
+    }
+
+    return false;
+}
 
 function whichOperation(op) {
-        switch (op) {
-            case '÷':
-                return op = '/';
-                break;
-            case 'x':
-                return op = '*';
-                break;
-            default:
-                return op;
-        }
+    switch (op) {
+        case '÷':
+            return op = '/';
+            break;
+        case 'x':
+            return op = '*';
+            break;
+        default:
+            return op;
+    }
 
 }
+
 function isNegativeNum(element, input) {
-    return element === '-' && input === ''? true : false;
+    return element === '-' && input === '' ? true : false;
 }
-
 
 function isEqualSign(element) {
     return element === "=" ? true : false;

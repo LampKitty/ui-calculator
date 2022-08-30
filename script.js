@@ -11,7 +11,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    return (a/b).toFixed(2);
+    return parseFloat((a / b).toFixed(2));
 }
 
 function operate(operator, a, b) {
@@ -44,7 +44,7 @@ buttonList.forEach(function (element) {
 
     element.addEventListener('click', function () {
         if (isOperator(element.textContent)) {
-            if(operatorCheck(element)) {
+            if (operatorCheck(element)) {
 
             } else {
                 num1 = usrInput;
@@ -60,13 +60,22 @@ buttonList.forEach(function (element) {
 })
 
 function operatorCheck(element) {
-    if(isEqualSign(element.textContent)) {
+    // if equal sign, evaluate expression
+    if (isEqualSign(element.textContent)) {
         num1 = operate(op, +num1, +usrInput);
         usrInput = '';
         op = ''
         display.textContent = num1;
         return true;
-    } else if(isNegativeNum(element.textContent, usrInput)) {
+    // substitute minus sign with plus and vice versa
+    } else if (op === '+' && element.textContent === '-' ||
+        op === '-' && element.textContent === '+') {
+        op = element.textContent;
+        display.textContent = display.textContent.slice(0, -1);
+        display.textContent += element.textContent;
+        return true;
+    // make typing negative numbers possible
+    } else if (isNegativeNum(element.textContent, usrInput)) {
         usrInput += element.textContent;
         display.textContent += element.textContent;
         return true;

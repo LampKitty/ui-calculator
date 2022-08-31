@@ -21,11 +21,12 @@ html,body {
 }
 
 #display {
-    background-color: #b1f0ec;
+    background-color: #a5f4fa;
     box-sizing: border-box;
     padding: 10px;
     border-radius: 5px;
-    font-size: 40px;
+    font: 40px Roboto, sans-serif;
+    color: rgb(56, 56, 56);
     /* flex */
     flex: 2;
     display: flex;
@@ -43,16 +44,19 @@ html,body {
 }
 
 #clear {
-    background-color: rgb(155, 155, 155);
+    box-sizing: border-box;
+    background-color: rgb(247, 192, 192);
     font-size: 18px;
-    border: solid, #696969;
+    border: 2px solid rgb(241, 166, 166);
     border-radius: 5px;
+    color: rgb(51, 51, 51);
+    font: 25px Roboto, sans-serif;
     /* flex */
     flex: 1;
 }
 
 #clear:hover {
-    background-color: #696969;
+    background-color: rgb(253, 177, 177);
 }
 
 .row {
@@ -65,9 +69,9 @@ html,body {
 
 .row>button {
     box-sizing: border-box;
-    background-color: rgb(155, 155, 155);
+    background-color: rgb(173, 173, 173);
     font-size: 18px;
-    border: solid, #696969;
+    border: 2px solid #696969;
     border-radius: 5px;
     /* flex */
     flex: 1;
@@ -76,5 +80,16 @@ html,body {
 }
 
 .row>button:hover {
-    background-color: #696969;
+    background-color: #929292;
 }
+
+.row>.operation {
+    background-color: rgb(135, 215, 252);
+    border: 2px solid rgb(99, 201, 248);
+    font-size: 23px;
+}
+
+.row>.operation:hover {
+    background-color: rgb(108, 208, 255);
+}
+

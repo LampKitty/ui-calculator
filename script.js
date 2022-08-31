@@ -34,11 +34,12 @@ const clear = document.querySelector('#clear');
 const buttonList = document.querySelectorAll('#numberpad>div>button');
 let display = document.querySelector('#display');
 
+
 // function vars
 let clickCounter = 0; // counter to prevent display overflow
 const maxDisplayCharacters = 11;
 let num2 = '';
-let num1 = 0; //
+let num1 = 0;
 let op = '';
 
 // Buttons
@@ -46,11 +47,11 @@ buttonList.forEach(function (element) {
 
     element.addEventListener('click', function () {
         clickCounter += 1;
-        if(isDisplayOverflow(clickCounter)) {
+        if (isDisplayOverflow(clickCounter)) {
             display.textContent = "Limit reached!"
             return;
         }
-        
+
         if (isOperator(element.textContent)) {
             if (operatorCheck(element)) {
 
@@ -67,6 +68,15 @@ buttonList.forEach(function (element) {
     })
 })
 
+// Clear button
+clear.addEventListener('click', function () {
+    display.textContent = '';
+    num2 = '';
+    num1 = 0;
+    op = '';
+})
+
+
 function operatorCheck(element) {
     // if equal sign, evaluate expression
     if (isEqualSign(element.textContent)) {
@@ -75,19 +85,19 @@ function operatorCheck(element) {
         op = ''
         display.textContent = num2;
         return true;
-    // substitute sign
+        // substitute sign
     } else if (display.textContent.charAt(
         display.textContent.length - 1) === op) {
         op = whichOperation(element.textContent);
         display.textContent = display.textContent.slice(0, -1);
         display.textContent += element.textContent;
         return true;
-    // make typing negative numbers possible
+        // make typing negative numbers possible
     } else if (isNegativeNum(element.textContent, num2)) {
         num2 += element.textContent;
         display.textContent += element.textContent;
         return true;
-    } else if(op != '') {
+    } else if (op != '') {
         op = whichOperation(op);
         num2 = operate(op, +num1, +num2);
         num1 = num2;
@@ -132,12 +142,13 @@ function isOperator(element) {
         element === '-' ||
         element === '+' ||
         element === '=' ||
-        element === '÷' ||
-        element === clear.textContent) {
+        element === '÷') {
 
         return true;
     } else {
         return false;
     }
 }
+
+
 

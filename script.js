@@ -38,7 +38,7 @@ let display = document.querySelector('#display');
 // function vars
 const maxDisplayCharacters = 11;
 let num2 = '';
-let num1 = 0;
+let num1 = '';
 let op = '';
 
 // Buttons
@@ -88,10 +88,10 @@ function operatorCheck(element) {
         return true;
         // substitute sign
     } else if (display.textContent.charAt(
-        display.textContent.length - 1) === op && num1 != 0) {
+        display.textContent.length - 1) === op) {
         op = convertOperator(element.textContent);
         display.textContent = display.textContent.slice(0, -1);
-        display.textContent += element.textContent;
+        display.textContent += op;
         return true;
         // make typing negative numbers possible
     } else if (isNegativeNum(element.textContent, num2)) {

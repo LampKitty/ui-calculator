@@ -36,7 +36,6 @@ let display = document.querySelector('#display');
 
 
 // function vars
-let clickCounter = 0; // counter to prevent display overflow
 const maxDisplayCharacters = 11;
 let num2 = '';
 let num1 = 0;
@@ -46,8 +45,7 @@ let op = '';
 buttonList.forEach(function (element) {
 
     element.addEventListener('click', function () {
-        clickCounter += 1;
-        if (isDisplayOverflow(clickCounter)) {
+        if (isDisplayOverflow(display.textContent.length)) {
             display.textContent = "Limit reached!"
             return;
         }
@@ -58,7 +56,7 @@ buttonList.forEach(function (element) {
             } else {
                 num1 = num2;
                 num2 = '';
-                op = whichOperation(element.textContent);
+                op = convertOperator(element.textContent);
                 display.textContent += op;
             }
         } else {
@@ -80,6 +78,9 @@ clear.addEventListener('click', function () {
 function operatorCheck(element) {
     // if equal sign, evaluate expression
     if (isEqualSign(element.textContent)) {
+        if(op === '' && num1 == "0") {
+            return true;
+        }
         num2 = operate(op, +num1, +num2);
         num1 = '';
         op = ''
@@ -87,8 +88,8 @@ function operatorCheck(element) {
         return true;
         // substitute sign
     } else if (display.textContent.charAt(
-        display.textContent.length - 1) === op) {
-        op = whichOperation(element.textContent);
+        display.textContent.length - 1) === op && num1 != 0) {
+        op = convertOperator(element.textContent);
         display.textContent = display.textContent.slice(0, -1);
         display.textContent += element.textContent;
         return true;
@@ -98,10 +99,10 @@ function operatorCheck(element) {
         display.textContent += element.textContent;
         return true;
     } else if (op != '') {
-        op = whichOperation(op);
+        op = convertOperator(op);
         num2 = operate(op, +num1, +num2);
         num1 = num2;
-        op = whichOperation(element.textContent);
+        op = convertOperator(element.textContent);
         num2 = '';
         display.textContent = num1;
         display.textContent += element.textContent;
@@ -111,7 +112,7 @@ function operatorCheck(element) {
     return false;
 }
 
-function whichOperation(op) {
+function convertOperator(op) {
     switch (op) {
         case '÷':
             return op = '/';

@@ -62,6 +62,7 @@ buttonList.forEach(function (element) {
         } else {
             display.textContent += element.textContent;
             num2 += element.textContent;
+            stripNull(display);
         }
     })
 })
@@ -124,6 +125,17 @@ function convertOperator(op) {
             return op;
     }
 
+}
+
+function stripNull(display) {
+    if(display.textContent.length < 2) {
+        return;
+    }
+    if(display.textContent.charAt(
+        display.textContent.length - 2) === '0') {
+        display.textContent = display.textContent.replace('0','');
+
+    } 
 }
 
 function isDisplayOverflow(counter) {

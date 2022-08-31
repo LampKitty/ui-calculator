@@ -46,7 +46,11 @@ buttonList.forEach(function (element) {
 
     element.addEventListener('click', function () {
         clickCounter += 1;
-        isDisplayOverflow(clickCounter);
+        if(isDisplayOverflow(clickCounter)) {
+            display.textContent = "Limit reached!"
+            return;
+        }
+        
         if (isOperator(element.textContent)) {
             if (operatorCheck(element)) {
 
@@ -112,7 +116,7 @@ function whichOperation(op) {
 }
 
 function isDisplayOverflow(counter) {
-    return counter > maxDisplayCharacters ? true : false;
+    return counter >= maxDisplayCharacters ? true : false;
 }
 
 function isNegativeNum(element, input) {

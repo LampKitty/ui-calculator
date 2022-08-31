@@ -35,26 +35,30 @@ const buttonList = document.querySelectorAll('#numberpad>div>button');
 let display = document.querySelector('#display');
 
 // function vars
-usrInput = '';
-let num1 = 0;
+let clickCounter = 0; // counter to prevent display overflow
+const maxDisplayCharacters = 11;
+let num2 = '';
+let num1 = 0; //
 let op = '';
 
 // Buttons
 buttonList.forEach(function (element) {
 
     element.addEventListener('click', function () {
+        clickCounter += 1;
+        isDisplayOverflow(clickCounter);
         if (isOperator(element.textContent)) {
             if (operatorCheck(element)) {
 
             } else {
-                num1 = usrInput;
-                usrInput = '';
+                num1 = num2;
+                num2 = '';
                 op = whichOperation(element.textContent);
                 display.textContent += op;
             }
         } else {
             display.textContent += element.textContent;
-            usrInput += element.textContent;
+            num2 += element.textContent;
         }
     })
 })
@@ -62,21 +66,30 @@ buttonList.forEach(function (element) {
 function operatorCheck(element) {
     // if equal sign, evaluate expression
     if (isEqualSign(element.textContent)) {
-        num1 = operate(op, +num1, +usrInput);
-        usrInput = '';
+        num2 = operate(op, +num1, +num2);
+        num1 = '';
         op = ''
-        display.textContent = num1;
+        display.textContent = num2;
         return true;
-    // substitute minus sign with plus and vice versa
-    } else if (op === '+' && element.textContent === '-' ||
-        op === '-' && element.textContent === '+') {
-        op = element.textContent;
+    // substitute sign
+    } else if (display.textContent.charAt(
+        display.textContent.length - 1) === op) {
+        op = whichOperation(element.textContent);
         display.textContent = display.textContent.slice(0, -1);
         display.textContent += element.textContent;
         return true;
     // make typing negative numbers possible
-    } else if (isNegativeNum(element.textContent, usrInput)) {
-        usrInput += element.textContent;
+    } else if (isNegativeNum(element.textContent, num2)) {
+        num2 += element.textContent;
+        display.textContent += element.textContent;
+        return true;
+    } else if(op != '') {
+        op = whichOperation(op);
+        num2 = operate(op, +num1, +num2);
+        num1 = num2;
+        op = whichOperation(element.textContent);
+        num2 = '';
+        display.textContent = num1;
         display.textContent += element.textContent;
         return true;
     }
@@ -96,6 +109,10 @@ function whichOperation(op) {
             return op;
     }
 
+}
+
+function isDisplayOverflow(counter) {
+    return counter > maxDisplayCharacters ? true : false;
 }
 
 function isNegativeNum(element, input) {
